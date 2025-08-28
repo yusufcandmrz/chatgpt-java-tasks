@@ -6,7 +6,7 @@ import java.util.List;
 public class Student {
 
     private final int id;
-    private String name;
+    private final String name;
     private final List<Integer> grades;
 
     public Student(int id, String name) {
@@ -21,10 +21,6 @@ public class Student {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public List<Integer> getGrades() {
