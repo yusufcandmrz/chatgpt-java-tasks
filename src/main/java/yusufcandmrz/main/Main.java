@@ -1,9 +1,10 @@
 package yusufcandmrz.main;
 
-import yusufcandmrz.studentgrademanager.StudentManager;
+import yusufcandmrz.tasktracker.TaskTracker;
 
 public class Main {
     public static void main(String[] args) {
-        new StudentManager().run();
+        // new StudentManager().run();
+        new TaskTracker().run();
     }
 }
