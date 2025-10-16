@@ -42,4 +42,14 @@ public class Task {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", priority=" + priority +
+                ", completed=" + completed +
+                '}';
+    }
 }

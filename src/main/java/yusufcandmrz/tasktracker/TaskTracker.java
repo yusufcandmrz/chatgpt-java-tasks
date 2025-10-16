@@ -54,7 +54,7 @@ public class TaskTracker {
         System.out.print("Enter your task's priority: ");
         String priority = scanner.nextLine();
         if (isValidPriority(priority)) {
-            taskList.add(new Task(title, Priority.valueOf(priority)));
+            taskList.add(new Task(title, Priority.valueOf(priority.toUpperCase())));
             System.out.println("Task added to your list");
         } else {
             System.out.println("Task did not added to your list");
@@ -62,9 +62,17 @@ public class TaskTracker {
     }
 
     private void listAllTasks() {
+        taskList.forEach(System.out::println);
     }
 
     private void markTaskComplete(Scanner scanner) {
+        System.out.print("Enter your task's id: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        taskList.stream().filter(task -> task.getId() == id).findFirst().ifPresent(task -> {
+            task.setCompleted(true);
+            System.out.println("Task completed");
+        });
     }
 
     private void deleteTask(Scanner scanner) {
