@@ -76,6 +76,12 @@ public class TaskTracker {
     }
 
     private void deleteTask(Scanner scanner) {
+        System.out.print("Enter you task's id: ");
+        int id = scanner.nextInt();
+        taskList.stream().filter(task -> task.getId() == id).findFirst().ifPresent(task -> {
+            taskList.remove(task);
+            System.out.println("Task deleted");
+        });
     }
 
     private void listByPriority() {
