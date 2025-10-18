@@ -1,9 +1,6 @@
 package yusufcandmrz.tasktracker;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class TaskTracker {
 
@@ -85,6 +82,9 @@ public class TaskTracker {
     }
 
     private void listByPriority() {
+        taskList.sort(Comparator.comparing(Task::getPriority).reversed());
+        System.out.println("Task list ordered by their priority");
+        taskList.forEach(System.out::println);
     }
 
     private void saveToFile(Scanner scanner) {
