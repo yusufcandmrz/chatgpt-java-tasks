@@ -64,21 +64,29 @@ public class TaskTracker {
 
     private void markTaskComplete(Scanner scanner) {
         System.out.print("Enter your task's id: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        taskList.stream().filter(task -> task.getId() == id).findFirst().ifPresent(task -> {
-            task.setCompleted(true);
-            System.out.println("Task completed");
-        });
+        try {
+            int id = Integer.parseInt(scanner.nextLine());
+            Optional<Task> taskOptional = taskList.stream().filter(task -> task.getId() == id).findFirst();
+            if (taskOptional.isPresent()) {
+                taskOptional.get().setCompleted(true);
+                System.out.println("Task marked as complete.");
+            } else {
+                System.out.println("Task with id " + id + " not found.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a number.");
+        }
     }
 
     private void deleteTask(Scanner scanner) {
         System.out.print("Enter you task's id: ");
-        int id = scanner.nextInt();
-        taskList.stream().filter(task -> task.getId() == id).findFirst().ifPresent(task -> {
-            taskList.remove(task);
-            System.out.println("Task deleted");
-        });
+        try {
+            int id = Integer.parseInt(scanner.nextLine());
+            boolean removed = taskList.removeIf(task -> task.getId() == id);
+            System.out.println(removed ? "Task deleted" : "Task with id " + id + " not found.");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a number.");
+        }
     }
 
     private void listByPriority() {
