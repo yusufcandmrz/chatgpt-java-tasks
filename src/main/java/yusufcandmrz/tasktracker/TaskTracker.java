@@ -54,12 +54,16 @@ public class TaskTracker {
             taskList.add(new Task(title, Priority.valueOf(priority.toUpperCase())));
             System.out.println("Task added to your list");
         } else {
-            System.out.println("Task did not added to your list");
+            System.out.println("Invalid priority. Please enter LOW, MEDIUM or HIGH.");
         }
     }
 
     private void listAllTasks() {
-        taskList.forEach(System.out::println);
+        if (taskList.isEmpty()) {
+            System.out.println("No tasks to display.");
+        } else {
+            taskList.forEach(System.out::println);
+        }
     }
 
     private void markTaskComplete(Scanner scanner) {
