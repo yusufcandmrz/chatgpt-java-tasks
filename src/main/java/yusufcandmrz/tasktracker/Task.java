@@ -1,6 +1,8 @@
 package yusufcandmrz.tasktracker;
 
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {
 
     private final int id;
     private String title;

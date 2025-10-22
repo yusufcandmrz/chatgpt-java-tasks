@@ -1,9 +1,11 @@
 package yusufcandmrz.tasktracker;
 
+import java.io.*;
 import java.util.*;
 
 public class TaskTracker {
 
+    private static final String FILE_PATH = "tasks.ser";
     private List<Task> taskList;
 
     public TaskTracker() {
@@ -31,8 +33,8 @@ public class TaskTracker {
                     case "3" -> markTaskComplete(scanner);
                     case "4" -> deleteTask(scanner);
                     case "5" -> listByPriority();
-                    case "6" -> saveToFile(scanner);
-                    case "7" -> loadFromFile(scanner);
+                    case "6" -> saveToFile();
+                    case "7" -> loadFromFile();
                     case "8" -> {
                         System.out.println("Exiting the program...");
                         return;
@@ -99,10 +101,32 @@ public class TaskTracker {
         taskList.forEach(System.out::println);
     }
 
-    private void saveToFile(Scanner scanner) {
+    private void saveToFile() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+            oos.writeObject(taskList);
+            System.out.println("List of Task objects saved successfully to " + FILE_PATH);
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: File not found at " + FILE_PATH);
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Error saving tasks to file: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    private void loadFromFile(Scanner scanner) {
+    private void loadFromFile() {
+        File file = new File(FILE_PATH);
+        if (!file.exists()) {
+            System.out.println("No tasks file found. Starting with an empty list.");
+            return;
+        } else {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
+                this.taskList = (List<Task>) ois.readObject();
+                System.out.println("List of Task object read successfully!");
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Error loading tasks from file: " + e.getMessage());
+            }
+        }
     }
 
     private boolean isValidPriority(String priority) {
